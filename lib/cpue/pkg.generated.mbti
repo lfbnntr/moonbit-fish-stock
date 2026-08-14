@@ -1,0 +1,40 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "lfbnntr/moonbit-fish-stock/lib/cpue"
+
+import {
+  "lfbnntr/moonbit-fish-stock/lib/types",
+}
+
+// Values
+pub fn compute_abundance_index(Array[Double], Double) -> Array[@types.AbundanceIndex] raise @types.ErrorType
+
+pub fn compute_cpue_series(Array[Double], Array[Double]) -> Array[Double] raise @types.ErrorType
+
+pub fn cpue_trend_analysis(Array[Double]) -> @types.TrendResult raise @types.ErrorType
+
+pub fn detrend_cpue(Array[Double]) -> Array[Double] raise @types.ErrorType
+
+pub fn geometric_mean_cpue(Array[Double]) -> Double raise @types.ErrorType
+
+pub fn hyperstability_test(Array[Double], Array[Double]) -> @types.TrendResult raise @types.ErrorType
+
+pub fn log_cpue(Array[Double]) -> Array[Double] raise @types.ErrorType
+
+pub fn nominal_vs_standardized(Array[Double], Array[Double]) -> @types.CpueComparison raise @types.ErrorType
+
+pub fn normalize_cpue(Array[Double]) -> Array[Double] raise @types.ErrorType
+
+pub fn raw_cpue(Double, Double) -> Double raise @types.ErrorType
+
+pub fn relative_cpue(Array[Double], Int) -> Array[Double] raise @types.ErrorType
+
+pub fn seasonal_adjustment(Array[Double], Int) -> Array[Double] raise @types.ErrorType
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
+
