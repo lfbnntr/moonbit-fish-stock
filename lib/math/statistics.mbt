@@ -1,104 +1,105 @@
-///|
-/// Compute the sum of an array of Doubles
-pub fn sum(data : Array[Double]) -> Double {
-  let mut s = 0.0
-  for i = 0; i < data.length(); i = i + 1 {
-    s = s + data[i]
-  }
-  s
-}
+// ============================================================
+// Comprehensive Statistical Functions & Multivariate Analysis
+// ============================================================
 
 ///|
-/// Compute the sum of squares of an array of Doubles
-pub fn sum_sq(data : Array[Double]) -> Double {
-  let mut s = 0.0
-  for i = 0; i < data.length(); i = i + 1 {
-    s = s + data[i] * data[i]
-  }
-  s
-}
-
-///|
-/// Compute the arithmetic mean
+/// Mean of an array of Doubles.
 pub fn mean(data : Array[Double]) -> Double {
-  if data.length() == 0 {
+  let n = data.length()
+  if n == 0 {
     return 0.0
   }
-  sum(data) / data.length().to_double()
+  let mut sum = 0.0
+  for i = 0; i < n; i = i + 1 {
+    sum = sum + data[i]
+  }
+  sum / n.to_double()
 }
 
 ///|
-/// Compute the population variance
+/// Weighted mean.
+pub fn weighted_mean(data : Array[Double], weights : Array[Double]) -> Double {
+  let n = data.length()
+  if n == 0 || n != weights.length() {
+    return 0.0
+  }
+  let mut sum_wx = 0.0
+  let mut sum_w = 0.0
+  for i = 0; i < n; i = i + 1 {
+    sum_wx = sum_wx + data[i] * weights[i]
+    sum_w = sum_w + weights[i]
+  }
+  if sum_w == 0.0 {
+    0.0
+  } else {
+    sum_wx / sum_w
+  }
+}
+
+///|
+/// Population variance.
 pub fn variance(data : Array[Double]) -> Double {
-  if data.length() == 0 {
+  let n = data.length()
+  if n == 0 {
     return 0.0
   }
   let m = mean(data)
-  let n = data.length().to_double()
-  let mut ss = 0.0
-  for i = 0; i < data.length(); i = i + 1 {
-    let diff = data[i] - m
-    ss = ss + diff * diff
+  let mut sum_sq = 0.0
+  for i = 0; i < n; i = i + 1 {
+    let d = data[i] - m
+    sum_sq = sum_sq + d * d
   }
-  ss / n
+  sum_sq / n.to_double()
 }
 
 ///|
-/// Compute the sample variance (with Bessel's correction)
+/// Sample variance (n - 1 denominator).
 pub fn sample_variance(data : Array[Double]) -> Double {
-  if data.length() <= 1 {
+  let n = data.length()
+  if n <= 1 {
     return 0.0
   }
   let m = mean(data)
-  let n = data.length().to_double()
-  let mut ss = 0.0
-  for i = 0; i < data.length(); i = i + 1 {
-    let diff = data[i] - m
-    ss = ss + diff * diff
+  let mut sum_sq = 0.0
+  for i = 0; i < n; i = i + 1 {
+    let d = data[i] - m
+    sum_sq = sum_sq + d * d
   }
-  ss / (n - 1.0)
+  sum_sq / (n.to_double() - 1.0)
 }
 
 ///|
-/// Compute the population standard deviation
+/// Standard deviation.
 pub fn std_dev(data : Array[Double]) -> Double {
   sqrt_approx(variance(data))
 }
 
 ///|
-/// Compute the sample standard deviation
+/// Sample standard deviation.
 pub fn sample_std_dev(data : Array[Double]) -> Double {
   sqrt_approx(sample_variance(data))
 }
 
 ///|
-/// Sort an array of Doubles in-place (insertion sort for simplicity)
-fn sort_doubles(data : Array[Double]) -> Unit {
-  let n = data.length()
-  for i = 1; i < n; i = i + 1 {
-    let key = data[i]
-    let mut j = i - 1
-    while j >= 0 && data[j] > key {
-      data[j + 1] = data[j]
-      j = j - 1
-    }
-    data[j + 1] = key
-  }
-}
-
-///|
-/// Compute the median of an array of Doubles
+/// Median of an array of Doubles.
 pub fn median(data : Array[Double]) -> Double {
-  if data.length() == 0 {
+  let n = data.length()
+  if n == 0 {
     return 0.0
   }
-  // Make a copy to avoid modifying the original
-  let sorted : Array[Double] = Array::make(data.length(), 0.0)
-  for i = 0; i < data.length(); i = i + 1 {
-    sorted[i] = data[i]
+  let sorted : Array[Double] = []
+  for i = 0; i < n; i = i + 1 {
+    sorted.push(data[i])
   }
-  sort_doubles(sorted)
-  let n = sorted.length()
+  for i = 0; i < n - 1; i = i + 1 {
+    for j = 0; j < n - i - 1; j = j + 1 {
+      if sorted[j] > sorted[j + 1] {
+        let tmp = sorted[j]
+        sorted[j] = sorted[j + 1]
+        sorted[j + 1] = tmp
+      }
+    }
+  }
   if n % 2 == 1 {
     sorted[n / 2]
   } else {
@@ -107,104 +108,93 @@ pub fn median(data : Array[Double]) -> Double {
 }
 
 ///|
-/// Compute the p-th percentile (p in [0, 100])
+/// Percentile (p in [0, 100]).
 pub fn percentile(data : Array[Double], p : Double) -> Double {
-  if data.length() == 0 {
+  let n = data.length()
+  if n == 0 {
     return 0.0
   }
-  let sorted : Array[Double] = Array::make(data.length(), 0.0)
-  for i = 0; i < data.length(); i = i + 1 {
-    sorted[i] = data[i]
+  let sorted : Array[Double] = []
+  for i = 0; i < n; i = i + 1 {
+    sorted.push(data[i])
   }
-  sort_doubles(sorted)
-  let n = sorted.length()
-  if p <= 0.0 {
-    return sorted[0]
+  for i = 0; i < n - 1; i = i + 1 {
+    for j = 0; j < n - i - 1; j = j + 1 {
+      if sorted[j] > sorted[j + 1] {
+        let tmp = sorted[j]
+        sorted[j] = sorted[j + 1]
+        sorted[j + 1] = tmp
+      }
+    }
   }
-  if p >= 100.0 {
-    return sorted[n - 1]
-  }
-  let rank = p / 100.0 * (n - 1).to_double()
-  let lower = floor_double(rank).to_int()
-  let upper = ceil_double(rank).to_int()
-  if lower == upper {
-    sorted[lower]
+  let idx = p / 100.0 * (n - 1).to_double()
+  let i_floor = floor_double(idx).to_int()
+  let i_ceil = ceil_double(idx).to_int()
+  if i_floor == i_ceil {
+    sorted[i_floor]
   } else {
-    let frac = rank - lower.to_double()
-    sorted[lower] * (1.0 - frac) + sorted[upper] * frac
+    let weight = idx - i_floor.to_double()
+    lerp(sorted[i_floor], sorted[i_ceil], weight)
   }
 }
 
 ///|
-/// Compute the covariance of two arrays
+/// Covariance between two series.
 pub fn covariance(x : Array[Double], y : Array[Double]) -> Double {
-  let n = min_double(x.length().to_double(), y.length().to_double()).to_int()
-  if n == 0 {
+  let n = x.length()
+  if n <= 1 || n != y.length() {
     return 0.0
   }
   let mx = mean(x)
   let my = mean(y)
-  let mut cov = 0.0
+  let mut sum_cov = 0.0
   for i = 0; i < n; i = i + 1 {
-    cov = cov + (x[i] - mx) * (y[i] - my)
+    sum_cov = sum_cov + (x[i] - mx) * (y[i] - my)
   }
-  cov / n.to_double()
+  sum_cov / (n.to_double() - 1.0)
 }
 
 ///|
-/// Compute the Pearson correlation coefficient
+/// Pearson correlation coefficient.
 pub fn correlation(x : Array[Double], y : Array[Double]) -> Double {
+  let n = x.length()
+  if n <= 1 || n != y.length() {
+    return 0.0
+  }
   let cov = covariance(x, y)
-  let sx = std_dev(x)
-  let sy = std_dev(y)
-  if sx == 0.0 || sy == 0.0 {
-    return 0.0
+  let sdx = sample_std_dev(x)
+  let sdy = sample_std_dev(y)
+  let denom = sdx * sdy
+  if denom == 0.0 {
+    0.0
+  } else {
+    clamp(cov / denom, -1.0, 1.0)
   }
-  cov / (sx * sy)
 }
 
 ///|
-/// Weighted mean of data with given weights
-pub fn weighted_mean(data : Array[Double], weights : Array[Double]) -> Double {
-  let n = min_double(data.length().to_double(), weights.length().to_double()).to_int()
-  if n == 0 {
-    return 0.0
-  }
-  let mut weighted_sum = 0.0
-  let mut weight_total = 0.0
-  for i = 0; i < n; i = i + 1 {
-    weighted_sum = weighted_sum + data[i] * weights[i]
-    weight_total = weight_total + weights[i]
-  }
-  if weight_total == 0.0 {
-    return 0.0
-  }
-  weighted_sum / weight_total
-}
-
-///|
-/// Compute skewness (Fisher's definition)
+/// Skewness (3rd standardized moment).
 pub fn skewness(data : Array[Double]) -> Double {
   let n = data.length()
   if n < 3 {
     return 0.0
   }
   let m = mean(data)
-  let sd = std_dev(data)
+  let sd = sample_std_dev(data)
   if sd == 0.0 {
     return 0.0
   }
-  let nd = n.to_double()
-  let mut m3 = 0.0
+  let mut sum_m3 = 0.0
   for i = 0; i < n; i = i + 1 {
-    let diff = (data[i] - m) / sd
-    m3 = m3 + diff * diff * diff
+    let z = (data[i] - m) / sd
+    sum_m3 = sum_m3 + z * z * z
   }
-  m3 / nd
+  let nf = n.to_double()
+  nf / ((nf - 1.0) * (nf - 2.0)) * sum_m3
 }
 
 ///|
-/// Compute excess kurtosis
+/// Kurtosis (excess kurtosis, 4th standardized moment - 3).
 pub fn kurtosis(data : Array[Double]) -> Double {
   let n = data.length()
   if n < 4 {
@@ -215,112 +205,100 @@ pub fn kurtosis(data : Array[Double]) -> Double {
   if sd == 0.0 {
     return 0.0
   }
-  let nd = n.to_double()
-  let mut m4 = 0.0
+  let mut sum_m4 = 0.0
   for i = 0; i < n; i = i + 1 {
-    let diff = (data[i] - m) / sd
-    let d2 = diff * diff
-    m4 = m4 + d2 * d2
+    let z = (data[i] - m) / sd
+    sum_m4 = sum_m4 + z * z * z * z
   }
-  m4 / nd - 3.0
+  sum_m4 / n.to_double() - 3.0
 }
 
 ///|
-/// Compute the z-score of a value given mean and standard deviation
-pub fn z_score(x : Double, m : Double, sd : Double) -> Double {
-  if sd == 0.0 {
-    return 0.0
-  }
-  (x - m) / sd
-}
-
-///|
-/// Compute the simple moving average with given window size
-pub fn moving_average(data : Array[Double], window : Int) -> Array[Double] {
+/// Simple 1D Moving Average with window size k.
+pub fn moving_average(data : Array[Double], k : Int) -> Array[Double] {
   let n = data.length()
-  if n == 0 || window <= 0 || window > n {
-    return []
+  let result : Array[Double] = []
+  if k <= 0 || n == 0 {
+    return result
   }
-  let result_len = n - window + 1
-  let result : Array[Double] = Array::make(result_len, 0.0)
-  // Compute first window sum
-  let mut window_sum = 0.0
-  for i = 0; i < window; i = i + 1 {
-    window_sum = window_sum + data[i]
-  }
-  result[0] = window_sum / window.to_double()
-  // Slide the window
-  for i = 1; i < result_len; i = i + 1 {
-    window_sum = window_sum + data[i + window - 1] - data[i - 1]
-    result[i] = window_sum / window.to_double()
+  for i = 0; i < n; i = i + 1 {
+    let start = if i - k + 1 < 0 { 0 } else { i - k + 1 }
+    let mut sum = 0.0
+    let mut count = 0
+    for j = start; j <= i; j = j + 1 {
+      sum = sum + data[j]
+      count = count + 1
+    }
+    result.push(sum / count.to_double())
   }
   result
 }
 
 ///|
-/// Exponential smoothing (single exponential)
-/// alpha is the smoothing factor in (0, 1)
+/// Single Exponential Smoothing with parameter alpha in (0, 1).
 pub fn exponential_smoothing(
   data : Array[Double],
   alpha : Double,
 ) -> Array[Double] {
   let n = data.length()
+  let result : Array[Double] = []
   if n == 0 {
-    return []
+    return result
   }
-  let result : Array[Double] = Array::make(n, 0.0)
-  result[0] = data[0]
+  result.push(data[0])
+  let mut s_prev = data[0]
   for i = 1; i < n; i = i + 1 {
-    result[i] = alpha * data[i] + (1.0 - alpha) * result[i - 1]
+    let s_curr = alpha * data[i] + (1.0 - alpha) * s_prev
+    result.push(s_curr)
+    s_prev = s_curr
   }
   result
 }
 
 ///|
-/// Compute the range (max - min) of data
-pub fn data_range(data : Array[Double]) -> Double {
-  if data.length() == 0 {
+/// One-Way Analysis of Variance (ANOVA) F-statistic between groups.
+pub fn one_way_anova_f_stat(groups : Array[Array[Double]]) -> Double {
+  let k = groups.length()
+  if k < 2 {
     return 0.0
   }
-  let mut lo = data[0]
-  let mut hi = data[0]
-  for i = 1; i < data.length(); i = i + 1 {
-    if data[i] < lo {
-      lo = data[i]
-    }
-    if data[i] > hi {
-      hi = data[i]
+  let mut total_n = 0
+  let mut grand_sum = 0.0
+  for g = 0; g < k; g = g + 1 {
+    let len = groups[g].length()
+    total_n = total_n + len
+    for i = 0; i < len; i = i + 1 {
+      grand_sum = grand_sum + groups[g][i]
     }
   }
-  hi - lo
-}
+  if total_n <= k {
+    return 0.0
+  }
+  let grand_mean = grand_sum / total_n.to_double()
 
-///|
-/// Find the minimum value in an array
-pub fn array_min(data : Array[Double]) -> Double {
-  if data.length() == 0 {
-    return 0.0
-  }
-  let mut lo = data[0]
-  for i = 1; i < data.length(); i = i + 1 {
-    if data[i] < lo {
-      lo = data[i]
-    }
-  }
-  lo
-}
+  let mut ss_between = 0.0
+  let mut ss_within = 0.0
 
-///|
-/// Find the maximum value in an array
-pub fn array_max(data : Array[Double]) -> Double {
-  if data.length() == 0 {
-    return 0.0
-  }
-  let mut hi = data[0]
-  for i = 1; i < data.length(); i = i + 1 {
-    if data[i] > hi {
-      hi = data[i]
+  for g = 0; g < k; g = g + 1 {
+    let n_g = groups[g].length().to_double()
+    let m_g = mean(groups[g])
+    let diff = m_g - grand_mean
+    ss_between = ss_between + n_g * diff * diff
+    for i = 0; i < groups[g].length(); i = i + 1 {
+      let d = groups[g][i] - m_g
+      ss_within = ss_within + d * d
     }
   }
-  hi
+
+  let df_between = (k - 1).to_double()
+  let df_within = (total_n - k).to_double()
+
+  let ms_between = ss_between / df_between
+  let ms_within = ss_within / df_within
+
+  if ms_within == 0.0 {
+    0.0
+  } else {
+    ms_between / ms_within
+  }
 }

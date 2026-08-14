@@ -4,10 +4,6 @@ package "lfbnntr/moonbit-fish-stock/lib/math"
 // Values
 pub fn abs_double(Double) -> Double
 
-pub fn array_max(Array[Double]) -> Double
-
-pub fn array_min(Array[Double]) -> Double
-
 pub fn bisection((Double) -> Double, Double, Double, Double, Int) -> Double
 
 pub fn ceil_double(Double) -> Double
@@ -17,8 +13,6 @@ pub fn clamp(Double, Double, Double) -> Double
 pub fn correlation(Array[Double], Array[Double]) -> Double
 
 pub fn covariance(Array[Double], Array[Double]) -> Double
-
-pub fn data_range(Array[Double]) -> Double
 
 pub fn determinant_2x2(Double, Double, Double, Double) -> Double
 
@@ -74,6 +68,8 @@ pub fn moving_average(Array[Double], Int) -> Array[Double]
 
 pub fn nelder_mead_2d((Double, Double) -> Double, Double, Double, Double, Double, Int) -> (Double, Double)
 
+pub fn one_way_anova_f_stat(Array[Array[Double]]) -> Double
+
 pub fn percentile(Array[Double], Double) -> Double
 
 pub let pi : Double
@@ -96,17 +92,11 @@ pub fn sqrt_approx(Double) -> Double
 
 pub fn std_dev(Array[Double]) -> Double
 
-pub fn sum(Array[Double]) -> Double
-
-pub fn sum_sq(Array[Double]) -> Double
-
 pub fn variance(Array[Double]) -> Double
 
 pub fn vector_norm(Array[Double]) -> Double
 
 pub fn weighted_mean(Array[Double], Array[Double]) -> Double
-
-pub fn z_score(Double, Double, Double) -> Double
 
 // Errors
 
