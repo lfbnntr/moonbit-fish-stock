@@ -1,0 +1,40 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "lfbnntr/moonbit-fish-stock/lib/environment"
+
+import {
+  "lfbnntr/moonbit-fish-stock/lib/types",
+}
+
+// Values
+pub fn climate_dynamic_msy(Double, ClimateModelParams) -> Double
+
+pub fn climate_schaefer_biomass(Double, Array[Double], Array[Double], ClimateModelParams) -> Array[Double] raise @types.ErrorType
+
+pub fn compute_anomalies(EnvSeries) -> Array[Double] raise @types.ErrorType
+
+pub fn cross_correlation_lag(EnvSeries, Array[Double], Int) -> Double raise @types.ErrorType
+
+pub fn moving_average_env(EnvSeries, Int) -> Array[Double] raise @types.ErrorType
+
+// Errors
+
+// Types and methods
+pub(all) struct ClimateModelParams {
+  r0 : Double
+  k0 : Double
+  q : Double
+  gamma : Double
+} derive(Eq)
+pub fn ClimateModelParams::new(Double, Double, Double, Double) -> Self
+
+pub(all) struct EnvSeries {
+  years : Array[Int]
+  values : Array[Double]
+  name : String
+} derive(Eq)
+pub fn EnvSeries::new(Array[Int], Array[Double], String) -> Self raise @types.ErrorType
+
+// Type aliases
+
+// Traits
+
