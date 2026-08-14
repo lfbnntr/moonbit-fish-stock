@@ -1,0 +1,172 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "lfbnntr/moonbit-fish-stock/lib/types"
+
+// Values
+pub fn validate_catch_record(CatchRecord) -> Unit raise ErrorType
+
+pub fn validate_management_scenario(ManagementScenario) -> Unit raise ErrorType
+
+pub fn validate_model_params(ModelParams) -> Unit raise ErrorType
+
+pub fn[T] validate_non_empty(Array[T], String) -> Unit raise ErrorType
+
+pub fn validate_positive(Double, String) -> Unit raise ErrorType
+
+pub fn validate_range(Double, Double, Double, String) -> Unit raise ErrorType
+
+pub fn[T, U] validate_same_length(Array[T], Array[U], String, String) -> Unit raise ErrorType
+
+pub fn validate_simulation_config(SimulationConfig) -> Unit raise ErrorType
+
+pub fn validate_stock_series(StockSeries) -> Unit raise ErrorType
+
+// Errors
+pub(all) suberror ErrorType {
+  InvalidParameter(String)
+  InsufficientData(String)
+  ConvergenceFailed(String)
+  NumericalError(String)
+  OutOfRange(String)
+  InvalidState(String)
+} derive(Eq)
+pub impl Show for ErrorType
+
+// Types and methods
+pub(all) struct AbundanceIndex {
+  year : Int
+  cpue : Double
+  abundance : Double
+  lower_ci : Double
+  upper_ci : Double
+} derive(Eq)
+pub fn AbundanceIndex::new(Int, Double, Double, Double, Double) -> Self
+
+pub(all) struct BootstrapResult {
+  point_estimate : Double
+  ci_lower : Double
+  ci_upper : Double
+  std_error : Double
+  samples : Array[Double]
+} derive(Eq)
+pub fn BootstrapResult::new(Double, Double, Double, Double, Array[Double]) -> Self
+pub impl Show for BootstrapResult
+
+pub(all) struct CatchRecord {
+  year : Int
+  catch_amount : Double
+  effort : Double
+  cpue : Double
+} derive(Eq)
+pub fn CatchRecord::new(Int, Double, Double) -> Self
+pub impl Show for CatchRecord
+
+pub(all) struct CpueComparison {
+  nominal : Array[Double]
+  standardized : Array[Double]
+  correlation : Double
+  bias : Double
+} derive(Eq)
+pub fn CpueComparison::new(Array[Double], Array[Double], Double, Double) -> Self
+
+pub(all) enum HarvestRule {
+  ConstantCatch(Double)
+  ConstantEffort(Double)
+  ConstantF(Double)
+  ThresholdRule(Double, Double, Double)
+  SlotRule(Double, Double)
+} derive(Eq)
+pub impl Show for HarvestRule
+
+pub(all) struct ManagementScenario {
+  name : String
+  rule : HarvestRule
+  projection_years : Int
+  discount_rate : Double
+} derive(Eq)
+pub fn ManagementScenario::new(String, HarvestRule, Int, Double) -> Self
+
+pub(all) struct ModelParams {
+  r : Double
+  k : Double
+  q : Double
+  sigma : Double
+  n : Double
+} derive(Eq)
+pub fn ModelParams::fox(Double, Double, Double) -> Self
+pub fn ModelParams::pella_tomlinson(Double, Double, Double, Double) -> Self
+pub fn ModelParams::schaefer(Double, Double, Double) -> Self
+pub impl Show for ModelParams
+
+pub(all) struct ModelResult {
+  params : ModelParams
+  biomass_series : Array[Double]
+  predicted_cpue : Array[Double]
+  residuals : Array[Double]
+  sse : Double
+  aic : Double
+  bic : Double
+} derive(Eq)
+pub fn ModelResult::new(ModelParams, Array[Double], Array[Double], Array[Double], Double, Double, Double) -> Self
+pub impl Show for ModelResult
+
+pub(all) struct ProjectionResult {
+  years : Array[Int]
+  biomass_trajectories : Array[Array[Double]]
+  catch_trajectories : Array[Array[Double]]
+  median_biomass : Array[Double]
+  median_catch : Array[Double]
+  prob_above_bmsy : Array[Double]
+} derive(Eq)
+pub fn ProjectionResult::new(Array[Int], Array[Array[Double]], Array[Array[Double]], Array[Double], Array[Double], Array[Double]) -> Self
+
+pub(all) struct ReferencePoints {
+  msy : Double
+  bmsy : Double
+  fmsy : Double
+  emsy : Double
+  mey : Double
+  current_biomass_ratio : Double
+} derive(Eq)
+pub fn ReferencePoints::new(Double, Double, Double, Double, Double, Double) -> Self
+pub impl Show for ReferencePoints
+
+pub(all) struct SimulationConfig {
+  n_years : Int
+  n_replicates : Int
+  process_error : Double
+  observation_error : Double
+  initial_depletion : Double
+} derive(Eq)
+pub fn SimulationConfig::default() -> Self
+
+pub(all) struct StockSeries {
+  years : Array[Int]
+  catch_data : Array[Double]
+  effort_data : Array[Double]
+  cpue_data : Array[Double]
+} derive(Eq)
+pub fn StockSeries::compute_cpue(Self) -> Array[Double]
+pub fn StockSeries::empty() -> Self
+pub fn StockSeries::filter_years(Self, Int, Int) -> Self
+pub fn StockSeries::from_arrays(Array[Int], Array[Double], Array[Double]) -> Self raise ErrorType
+pub fn StockSeries::get_year_range(Self) -> (Int, Int) raise ErrorType
+pub fn StockSeries::mean_catch(Self) -> Double raise ErrorType
+pub fn StockSeries::mean_cpue(Self) -> Double raise ErrorType
+pub fn StockSeries::mean_effort(Self) -> Double raise ErrorType
+pub fn StockSeries::merge_series(Self, Self) -> Self
+pub fn StockSeries::series_length(Self) -> Int
+pub fn StockSeries::to_records(Self) -> Array[CatchRecord]
+pub impl Show for StockSeries
+
+pub(all) struct TrendResult {
+  slope : Double
+  intercept : Double
+  r_squared : Double
+  trend_direction : String
+} derive(Eq)
+pub fn TrendResult::new(Double, Double, Double, String) -> Self
+
+// Type aliases
+
+// Traits
+
