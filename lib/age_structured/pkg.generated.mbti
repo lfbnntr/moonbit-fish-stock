@@ -1,0 +1,65 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "lfbnntr/moonbit-fish-stock/lib/age_structured"
+
+import {
+  "lfbnntr/moonbit-fish-stock/lib/types",
+}
+
+// Values
+pub fn beverton_holt_recruitment(Double, RecruitmentParams) -> Double raise @types.ErrorType
+
+pub fn beverton_holt_steepness(Double, Double, Double, Double) -> Double raise @types.ErrorType
+
+pub fn calculate_ssb(Array[Double], AgeStructureConfig) -> Double
+
+pub fn calculate_yield(Array[Double], Double, AgeStructureConfig) -> Double
+
+pub fn deriso_schnute_recruitment(Double, Double, Double, Double) -> Double raise @types.ErrorType
+
+pub fn popes_cohort_analysis(Array[Array[Double]], Double, Double, Array[Double], Array[Double]) -> VPAResult raise @types.ErrorType
+
+pub fn project_age_structure_one_year(Array[Double], Double, Double, AgeStructureConfig) -> Array[Double] raise @types.ErrorType
+
+pub fn ricker_peak_recruitment(RecruitmentParams) -> Double
+
+pub fn ricker_peak_spawning_biomass(RecruitmentParams) -> Double
+
+pub fn ricker_recruitment(Double, RecruitmentParams) -> Double raise @types.ErrorType
+
+pub fn solve_baranov_f(Double, Double, Double) -> Double
+
+// Errors
+
+// Types and methods
+pub(all) struct AgeStructureConfig {
+  num_ages : Int
+  natural_mortality : Array[Double]
+  weight_at_age : Array[Double]
+  maturity_at_age : Array[Double]
+  selectivity_at_age : Array[Double]
+} derive(Eq)
+pub fn AgeStructureConfig::new(Int, Double, Array[Double], Array[Double], Array[Double]) -> Self
+
+pub(all) struct RecruitmentParams {
+  a : Double
+  b : Double
+  steepness : Double
+  r0 : Double
+  s0 : Double
+} derive(Eq)
+pub fn RecruitmentParams::beverton_holt(Double, Double) -> Self
+pub fn RecruitmentParams::ricker(Double, Double) -> Self
+
+pub(all) struct VPAResult {
+  num_ages : Int
+  num_years : Int
+  population_matrix : Array[Array[Double]]
+  fishing_mortality : Array[Array[Double]]
+  spawning_biomass : Array[Double]
+} derive(Eq)
+pub fn VPAResult::new(Int, Int, Array[Array[Double]], Array[Array[Double]], Array[Double]) -> Self
+
+// Type aliases
+
+// Traits
+
