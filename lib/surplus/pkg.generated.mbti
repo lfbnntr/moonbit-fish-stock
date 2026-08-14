@@ -1,0 +1,76 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "lfbnntr/moonbit-fish-stock/lib/surplus"
+
+import {
+  "lfbnntr/moonbit-fish-stock/lib/types",
+}
+
+// Values
+pub fn durbin_watson_stat(Array[Double]) -> Double
+
+pub fn fit_fox(@types.StockSeries, Array[Double], Array[Double], Array[Double]) -> @types.ModelResult raise @types.ErrorType
+
+pub fn fit_pella_tomlinson(@types.StockSeries, Array[Double], Array[Double], Array[Double], Double) -> @types.ModelResult raise @types.ErrorType
+
+pub fn fit_schaefer(@types.StockSeries, Array[Double], Array[Double], Array[Double]) -> @types.ModelResult raise @types.ErrorType
+
+pub fn fox_biomass_dynamics(Double, Array[Double], @types.ModelParams) -> Array[Double] raise @types.ErrorType
+
+pub fn fox_bmsy(@types.ModelParams) -> Double
+
+pub fn fox_equilibrium_yield(Double, @types.ModelParams) -> Double
+
+pub fn fox_fmsy(@types.ModelParams) -> Double
+
+pub fn fox_msy(@types.ModelParams) -> Double
+
+pub fn pella_tomlinson_biomass_dynamics(Double, Array[Double], @types.ModelParams) -> Array[Double] raise @types.ErrorType
+
+pub fn pella_tomlinson_bmsy(@types.ModelParams) -> Double
+
+pub fn pella_tomlinson_equilibrium_yield(Double, @types.ModelParams) -> Double
+
+pub fn pella_tomlinson_fmsy(@types.ModelParams) -> Double
+
+pub fn pella_tomlinson_msy(@types.ModelParams) -> Double
+
+pub fn rank_models_by_aic(Array[@types.ModelResult]) -> Array[Int]
+
+pub fn run_diagnostics(@types.ModelResult) -> ModelDiagnostics
+
+pub fn runs_test_p_value(Array[Double]) -> Double
+
+pub fn schaefer_biomass_dynamics(Double, Array[Double], @types.ModelParams) -> Array[Double] raise @types.ErrorType
+
+pub fn schaefer_bmsy(@types.ModelParams) -> Double
+
+pub fn schaefer_emsy(@types.ModelParams) -> Double
+
+pub fn schaefer_equilibrium_yield(Double, @types.ModelParams) -> Double
+
+pub fn schaefer_fmsy(@types.ModelParams) -> Double
+
+pub fn schaefer_mey(@types.ModelParams, Double, Double) -> Double
+
+pub fn schaefer_msy(@types.ModelParams) -> Double
+
+pub fn schaefer_predicted_cpue(Array[Double], Double) -> Array[Double]
+
+pub fn schaefer_sse(Array[Double], Array[Double]) -> Double raise @types.ErrorType
+
+// Errors
+
+// Types and methods
+pub(all) struct ModelDiagnostics {
+  durbin_watson : Double
+  runs_p_value : Double
+  is_autocorrelated : Bool
+  mean_residual : Double
+  std_residual : Double
+} derive(Eq)
+pub fn ModelDiagnostics::new(Double, Double, Bool, Double, Double) -> Self
+
+// Type aliases
+
+// Traits
+
