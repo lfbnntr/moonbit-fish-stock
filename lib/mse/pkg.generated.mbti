@@ -1,0 +1,36 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "lfbnntr/moonbit-fish-stock/lib/mse"
+
+import {
+  "lfbnntr/moonbit-fish-stock/lib/math",
+  "lfbnntr/moonbit-fish-stock/lib/types",
+}
+
+// Values
+pub fn run_closed_loop_mse(@types.ModelParams, @types.ManagementScenario, @types.SimulationConfig, Int) -> @types.ProjectionResult raise @types.ErrorType
+
+// Errors
+
+// Types and methods
+pub(all) struct MSEPerformanceMetrics {
+  mean_catch : Double
+  catch_aav : Double
+  prob_above_bmsy : Double
+  prob_below_blim : Double
+  final_depletion : Double
+} derive(Eq)
+pub fn MSEPerformanceMetrics::new(Double, Double, Double, Double, Double) -> Self
+
+pub(all) struct OperatingModel {
+  params : @types.ModelParams
+  mut current_biomass : Double
+  config : @types.SimulationConfig
+} derive(Eq)
+pub fn OperatingModel::new(@types.ModelParams, Double, @types.SimulationConfig) -> Self
+pub fn OperatingModel::observe_cpue(Self, @math.PRNG) -> Double
+pub fn OperatingModel::step_operating_model(Self, Double, @math.PRNG) -> Double
+
+// Type aliases
+
+// Traits
+
