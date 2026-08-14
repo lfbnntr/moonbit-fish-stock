@@ -1,0 +1,15 @@
+import {
+  "lfbnntr/moonbit-fish-stock/lib/types",
+  "lfbnntr/moonbit-fish-stock/lib/math",
+  "lfbnntr/moonbit-fish-stock/lib/cpue",
+  "lfbnntr/moonbit-fish-stock/lib/surplus",
+  "lfbnntr/moonbit-fish-stock/lib/age_structured",
+  "lfbnntr/moonbit-fish-stock/lib/environment",
+  "lfbnntr/moonbit-fish-stock/lib/bootstrap",
+  "lfbnntr/moonbit-fish-stock/lib/indicators",
+  "lfbnntr/moonbit-fish-stock/lib/management",
+  "lfbnntr/moonbit-fish-stock/lib/mse",
+  "lfbnntr/moonbit-fish-stock/lib/report",
+}
+
+pkgtype(kind: "executable")
