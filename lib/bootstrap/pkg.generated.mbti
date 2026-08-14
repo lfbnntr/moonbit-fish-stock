@@ -1,0 +1,21 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "lfbnntr/moonbit-fish-stock/lib/bootstrap"
+
+import {
+  "lfbnntr/moonbit-fish-stock/lib/math",
+  "lfbnntr/moonbit-fish-stock/lib/types",
+}
+
+// Values
+pub fn analyze_bootstrap_samples(Array[Double], Double) -> @types.BootstrapResult raise @types.ErrorType
+
+pub fn residual_bootstrap_cpue(@types.ModelResult, Int, @math.PRNG) -> Array[Array[Double]] raise @types.ErrorType
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
+
