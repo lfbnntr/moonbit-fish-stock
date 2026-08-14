@@ -1,0 +1,30 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "lfbnntr/moonbit-fish-stock/lib/management"
+
+import {
+  "lfbnntr/moonbit-fish-stock/lib/types",
+}
+
+// Values
+pub fn calculate_tac(@types.ModelResult, @types.ManagementScenario) -> TACRecommendation raise @types.ErrorType
+
+pub fn evaluate_hcr_catch(@types.HarvestRule, Double, Double) -> Double
+
+pub fn evaluate_hcr_f(@types.HarvestRule, Double, Double) -> Double
+
+// Errors
+
+// Types and methods
+pub(all) struct TACRecommendation {
+  scenario_name : String
+  recommended_tac : Double
+  target_f : Double
+  projected_biomass : Double
+  status : String
+} derive(Eq)
+pub fn TACRecommendation::new(String, Double, Double, Double, String) -> Self
+
+// Type aliases
+
+// Traits
+
