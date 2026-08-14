@@ -1,0 +1,39 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "lfbnntr/moonbit-fish-stock/lib/indicators"
+
+import {
+  "lfbnntr/moonbit-fish-stock/lib/types",
+}
+
+// Values
+pub fn calculate_pella_tomlinson_reference_points(@types.ModelResult) -> @types.ReferencePoints
+
+pub fn calculate_schaefer_reference_points(@types.ModelResult, Double, Double) -> @types.ReferencePoints
+
+pub fn compute_kobe_trajectory(Array[Int], Array[Double], Array[Double], @types.ReferencePoints) -> Array[KobePoint] raise @types.ErrorType
+
+pub fn green_quadrant_probability(Array[KobePoint]) -> Double
+
+// Errors
+
+// Types and methods
+pub(all) struct KobePoint {
+  year : Int
+  b_ratio : Double
+  f_ratio : Double
+  quadrant : KobeQuadrant
+} derive(Eq)
+pub fn KobePoint::new(Int, Double, Double) -> Self
+
+pub(all) enum KobeQuadrant {
+  Green
+  Yellow
+  Orange
+  Red
+} derive(Eq)
+pub impl Show for KobeQuadrant
+
+// Type aliases
+
+// Traits
+
