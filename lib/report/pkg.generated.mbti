@@ -1,0 +1,22 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "lfbnntr/moonbit-fish-stock/lib/report"
+
+import {
+  "lfbnntr/moonbit-fish-stock/lib/types",
+}
+
+// Values
+pub fn generate_markdown_assessment_report(String, @types.ModelResult, @types.ReferencePoints) -> String
+
+pub fn generate_scenario_comparison_table(Array[@types.ManagementScenario], Array[@types.ProjectionResult]) -> String
+
+pub fn render_ascii_line_chart(String, Array[Double], Int) -> String
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
+
