@@ -23,5 +23,5 @@
 
 ## 四、 质量与规范指标
 - **代码规模**: 5,595 行原生 MoonBit 源码（纯手写非空代码 4,562 行）。
-- **工具链规范**: 0 警告通过 `moon check --deny-warn`、`moon fmt` 与 `moon info`。
+- **工具链规范**: 0 警告通过 moon check --deny-warn、moon fmt 与 moon info。
 - **单元测试**: 40 项单元测试 100% 通过，配套完整的 GitHub Actions 多平台 CI。

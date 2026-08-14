@@ -56,7 +56,7 @@ pub fn gradient_descent_1d(
 
 ///|
 /// Bisection method for root finding
-/// Finds x in [a, b] such that f(x) �?0
+/// Finds x in [a, b] such that f(x) ?0
 /// Assumes f(a) and f(b) have opposite signs
 pub fn bisection(
   f : (Double) -> Double,
